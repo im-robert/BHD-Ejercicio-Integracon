@@ -18,3 +18,7 @@ NOTA: en caso de que no se instalen los paquetes de manera automática, usar el 
 
 NOTA: 
 Se usó .NET 8 y SQL Server para esta prueba.
+
+
+Foto del endpoint en funcionamiento:
+![image](https://github.com/user-attachments/assets/7aad9d79-8564-4e2d-8a11-aeed80347885)
