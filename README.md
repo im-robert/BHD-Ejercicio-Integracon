@@ -22,3 +22,7 @@ Se usó .NET 8 y SQL Server para esta prueba.
 
 Foto del endpoint en funcionamiento:
 ![image](https://github.com/user-attachments/assets/7aad9d79-8564-4e2d-8a11-aeed80347885)
+
+
+Diagrama de la solución:
+![Diagrama de la solucion proyecto-BHD](https://github.com/user-attachments/assets/ec0a34ba-00e4-48a2-ac25-31c52fd180d8)
