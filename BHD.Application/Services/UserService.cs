@@ -43,7 +43,7 @@ public class UserService : IUserService
 
     public async Task<RegisterUserResponseDto> RegisterUserAsync(RegisterUserRequestDto request)
     {
-        // Mapeo de DTO a entidad
+
         var user = new User
         {
             UserName = request.Email,
@@ -54,7 +54,7 @@ public class UserService : IUserService
             IsActive = true,
         };
 
-        // Agregar phones
+
         foreach (var p in request.Phones)
         {
             user.Phones.Add(new Phone
@@ -66,17 +66,15 @@ public class UserService : IUserService
             });
         }
 
-        // Creando usuario con Identity
         var result = await _userManager.CreateAsync(user, request.Password);
         if (!result.Succeeded)
         {
             throw new Exception(string.Join("; ", result.Errors));
         }
 
-        // Generando token JWT
         var tokenValue = GenerateJwtToken(user);
 
-        // Persistiendo el token en tabla separada
+  
         var userToken = new UserToken
         {
             Id = Guid.NewGuid(),
@@ -90,7 +88,7 @@ public class UserService : IUserService
 
         await _userRepository.SaveChangesAsync();
 
-        // Mapeando a DTO de respuesta
+
         var response = new RegisterUserResponseDto
         {
             Id = user.Id,

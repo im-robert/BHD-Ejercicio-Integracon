@@ -10,7 +10,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUserRequestDto>
 {
     public RegisterUserValidator(IConfiguration config, IUserRepository userRepository)
     {
-        // Validando email con regex desde configuración
+
         var emailPattern = config["Validation:EmailRegex"];
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("El email es requerido.")
@@ -18,7 +18,7 @@ public class RegisterUserValidator : AbstractValidator<RegisterUserRequestDto>
             .MustAsync(async (email, ct) => !await userRepository.EmailExistsAsync(email))
             .WithMessage("El correo ya se encuentra registrado");
 
-        // Validando password con regex desde configuración
+   
         var passwordPattern = config["Validation:PasswordRegex"];
         RuleFor(x => x.Password)
             .NotEmpty().WithMessage("La contraseña es requerida.")

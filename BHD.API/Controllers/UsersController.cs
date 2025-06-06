@@ -3,9 +3,6 @@ using BHD.Application.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation.Results;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc.Controllers;
 
 namespace BHD.API.Controllers;
 
@@ -25,7 +22,7 @@ public class UsersController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterUserRequestDto request)
     {
-        // Validar manualmente con FluentValidation
+
         ValidationResult result = await _validator.ValidateAsync(request);
         if (!result.IsValid)
         {
@@ -41,7 +38,7 @@ public class UsersController : ControllerBase
         {
             return BadRequest(new { mensaje = ex.Message });
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             return StatusCode(500, new { mensaje = ex.Message });
         }

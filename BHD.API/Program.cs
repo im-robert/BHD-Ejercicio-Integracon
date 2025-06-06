@@ -23,15 +23,15 @@ namespace BHD.API
 
             ConfigurationManager configuration = builder.Configuration;
 
-            //  DbContext
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            //  Identity
+     
             builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
             {
                 options.User.RequireUniqueEmail = true;
-                // ajuste de políticas de contraseña 
+ 
                 options.Password.RequireDigit = true;               
                 options.Password.RequireLowercase = false;         
                 options.Password.RequireUppercase = false;          
@@ -44,7 +44,7 @@ namespace BHD.API
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            // JWT Authentication
+
             var jwtSettings = configuration.GetSection("JwtSettings");
             var key = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]);
             builder.Services.AddAuthentication(options =>
@@ -68,28 +68,28 @@ namespace BHD.API
                 };
             });
 
-            // AutoMapper
+          
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-            //FluentValidation
+
             builder.Services.AddScoped<IValidator<BHD.Application.DTOs.RegisterUserRequestDto>, RegisterUserValidator>();
 
-            //Servicios y repositorios
+     
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IUserService, UserService>();
 
-            // Controladores
+ 
             builder.Services.AddControllers()
                 .ConfigureApiBehaviorOptions(options =>
                 {
-                    options.SuppressModelStateInvalidFilter = true; // Manejo manual de validaciones
+                    options.SuppressModelStateInvalidFilter = true; 
                 });
 
-            // Swagger
+  
             builder.Services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyBankApp API", Version = "v1" });
-                // Configuración JWT en Swagger
+      
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "Authorization",
@@ -111,7 +111,7 @@ namespace BHD.API
           
             var app = builder.Build();
 
-            // Middleware
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
