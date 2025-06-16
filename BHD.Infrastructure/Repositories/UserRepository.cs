@@ -22,13 +22,6 @@ public class UserRepository : IUserRepository
         return await _userManager.FindByEmailAsync(email) != null;
     }
 
-    public async Task<User> CreateUserAsync(User user, string password)
-    {
-        var result = await _userManager.CreateAsync(user, password);
-        if (!result.Succeeded)
-            throw new Exception(string.Join("; ", result.Errors));
-        return user;
-    }
 
     public async Task SaveChangesAsync()
     {

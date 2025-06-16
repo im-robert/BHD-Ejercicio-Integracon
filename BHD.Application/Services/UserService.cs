@@ -3,7 +3,6 @@ using BHD.Application.DTOs;
 using BHD.Domain.Entities;
 using BHD.Domain.Repositories;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -46,7 +45,7 @@ public class UserService : IUserService
 
         var user = new User
         {
-            UserName = request.Email,
+            UserName = request.Name,
             Email = request.Email,
             Created = DateTime.UtcNow,
             Modified = DateTime.UtcNow,
@@ -82,7 +81,7 @@ public class UserService : IUserService
             Token = tokenValue,
             IssuedAt = DateTime.UtcNow,
             ExpiresAt = DateTime.UtcNow.AddMinutes(
-                    double.Parse(_configuration["JwtSettings:ExpiryMinutes"]))
+                    double.Parse(_configuration["JwtSettings:ExpiryMinutes"])) // TODO  ver que significa este mapeo
         };
         await _userRepository.AddTokenAsync(userToken);
 
@@ -105,6 +104,7 @@ public class UserService : IUserService
         return response;
     }
 
+    //TODO estudiar este metodo y su funcionamiento
     private string GenerateJwtToken(User user)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");

@@ -3,12 +3,13 @@ using BHD.Application.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BHD.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class UsersController : ControllerBase
+public class UsersController : ControllerBase 
 {
     private readonly IUserService _userService;
     private readonly IValidator<RegisterUserRequestDto> _validator;
@@ -45,6 +46,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAllUsers()
     {
         var users = await _userService.GetAllAsync();
