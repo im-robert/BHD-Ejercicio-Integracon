@@ -52,7 +52,7 @@ public class UserService : IUserService
             LastLogin = DateTime.UtcNow,
             IsActive = true,
         };
-
+        
 
         foreach (var p in request.Phones)
         {
@@ -81,7 +81,7 @@ public class UserService : IUserService
             Token = tokenValue,
             IssuedAt = DateTime.UtcNow,
             ExpiresAt = DateTime.UtcNow.AddMinutes(
-                    double.Parse(_configuration["JwtSettings:ExpiryMinutes"])) // TODO  ver que significa este mapeo
+                    double.Parse(_configuration["JwtSettings:ExpiryMinutes"])) 
         };
         await _userRepository.AddTokenAsync(userToken);
 
@@ -104,7 +104,7 @@ public class UserService : IUserService
         return response;
     }
 
-    //TODO estudiar este metodo y su funcionamiento
+   
     private string GenerateJwtToken(User user)
     {
         var jwtSettings = _configuration.GetSection("JwtSettings");
